@@ -1,0 +1,14 @@
+# 系统与编辑器文件
+.DS_Store
+
+# DataClaw 运行时数据与密钥
+dataclaw/.env
+dataclaw/node_modules/
+dataclaw/data/store.json
+dataclaw/data/browser/
+dataclaw/data/browser-standard/
+dataclaw/exports/
+
+# 物流栏目由“推送”动作生成，不随代码提交
+dist/data/logistics-news.js
+dist/policy/

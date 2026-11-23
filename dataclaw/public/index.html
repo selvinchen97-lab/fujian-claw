@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>DataClaw · 内容采集工作台</title
+  ><link rel="stylesheet" href="/style.css" />
+  <body>
+    <aside>
+      <div class="brand">
+        <span>✦</span>
+        <div>DataClaw<small>公开信息内容工作台</small></div>
+      </div>
+      <nav>
+        <button class="active" data-view="collect">⌁ 采集中心</button
+        ><button data-view="articles">▤ 内容库</button
+        ><button data-view="logs">◷ 工作日志</button
+        ><button data-view="settings">⚙ 采集设置</button>
+      </nav>
+      <div class="aside-bottom">本地运行 · 数据只保存在当前电脑</div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">CONTENT OPERATIONS</p>
+          <h1 id="page-title">采集中心</h1>
+        </div>
+        <div class="status"><i></i>本地服务运行中</div>
+      </header>
+      <section id="collect" class="view show">
+        <div class="collection-hero">
+          <div>
+            <span class="tag">COLLECTION CONFIGURATION</span>
+            <h2>采集中心</h2>
+            <p>统一管理公开网页的采集路由与内容推送策略。</p>
+          </div>
+          <div class="collection-summary">
+            <div><b id="route-count">0</b><span>采集路由</span></div>
+            <div><b id="article-count">0</b><span>内容库文章</span></div>
+          </div>
+        </div>
+        <section class="collection-directory" aria-label="采集路由配置">
+          <div class="directory-head">
+            <div>
+              <p class="eyebrow">SOURCE DIRECTORY</p>
+              <h2>采集路由</h2>
+            </div>
+            <div class="batch-actions">
+              <span id="batch-selection">已选择 0 条</span>
+              <button id="select-all-routes" class="secondary">全选路由</button>
+              <button id="collect-selected" disabled>一键采集</button>
+              <button id="stop-collection" class="danger" hidden>停止采集</button>
+            </div>
+          </div>
+          <div class="route-table-head" aria-hidden="true">
+            <span></span><span>采集网站</span><span>采集路由</span><span>是否直接推送</span
+            ><span>上次采集时间</span><span>采集状态</span><span></span>
+          </div>
+          <div id="collection-routes" class="collection-routes">
+            正在加载采集配置…
+          </div>
+          <p class="collection-note">
+            一键采集会将已选路由统一加入任务队列，并按安全节流顺序采集增量内容。
+          </p>
+        </section>
+        <div class="collection-steps" aria-hidden="true">
+          <div class="source-panel">
+            <div>
+              <p class="eyebrow">已识别来源</p>
+              <h3>海关总署 · 新闻发布</h3>
+              <p>
+                选择栏目后自动填入对应列表页；各关新闻会包含直属海关站点的原文链接。
+              </p>
+            </div>
+            <div id="customs-categories" class="category-list"></div>
+          </div>
+          <div class="panel">
+            <label>第一步：资讯列表页地址</label>
+            <div class="url-row">
+              <input
+                id="url"
+                value="http://ltj.customs.gov.cn/customs/xwfb34/302263/index.html"
+                placeholder="https://example.com/news"
+              /><button id="preview">预览链接</button>
+            </div>
+            <p class="note">
+              不会自动抓取正文。请从下方列表选择一篇文章，再预览其原网页和正文。
+            </p>
+          </div>
+          <div class="result-panel">
+            <div class="section-head">
+              <div>
+                <h3>第二步：选择文章</h3>
+                <span id="preview-info">尚未执行预览</span>
+              </div>
+            </div>
+            <div id="links" class="empty">
+              输入资讯列表页后，选择“预览链接”查看可采集条目。
+            </div>
+          </div>
+          <div id="selected-article" class="selected-article hidden">
+            <div>
+              <p class="eyebrow">已选择文章</p>
+              <h3 id="selected-title"></h3>
+              <p id="selected-url"></p>
+            </div>
+            <button id="article-preview" class="secondary">
+              第三步：预览正文网页
+            </button>
+          </div>
+        </div>
+      </section>
+      <section id="articles" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">SAVED CONTENT</p>
+            <h2>内容库</h2>
+          </div>
+        </div>
+        <div id="article-list" class="article-list empty">
+          还没有已保存的文章。
+        </div>
+      </section>
+      <section id="logs" class="view">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">COLLECTION CALENDAR</p>
+            <h2>工作日志</h2>
+            <p>按日期记录每个采集源的采集结果。</p>
+          </div>
+        </div>
+        <div class="log-calendar-head">
+          <button id="calendar-prev" class="secondary">‹</button
+          ><strong id="calendar-title"></strong
+          ><button id="calendar-next" class="secondary">›</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span>日</span><span>一</span><span>二</span><span>三</span
+          ><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div id="log-calendar" class="log-calendar"></div>
+        <div id="log-list" class="log-list empty">暂无采集记录。</div>
+      </section>
+      <section id="settings" class="view">
+        <div class="section-head"><div><p class="eyebrow">COLLECTION SETTINGS</p><h2>采集设置</h2><p>控制一键采集的访问节奏与失败重试方式。</p></div></div>
+        <form id="collection-settings" class="settings-card">
+          <label>执行方式<select name="strategy"><option value="round-robin">轮转采集（推荐）</option><option value="sequential">逐栏目采集</option></select><small>轮转方式会在四个栏目之间每次各抓一篇，降低连续访问单一栏目的频率。</small></label>
+          <label>列表页间隔（秒）<input name="listIntervalSeconds" type="number" min="0" max="3600" /></label>
+          <label>正文最小间隔（秒）<input name="articleMinSeconds" type="number" min="0" max="3600" /></label>
+          <label>正文最大间隔（秒）<input name="articleMaxSeconds" type="number" min="0" max="3600" /></label>
+          <label>每轮完成后冷却（秒）<input name="cycleRestSeconds" type="number" min="0" max="3600" /></label>
+          <label>首次限流重试等待（分钟）<input name="retryFirstMinutes" type="number" min="0" max="3600" /></label>
+          <label>第二次限流重试等待（分钟）<input name="retrySecondMinutes" type="number" min="0" max="3600" /></label>
+          <label>每页最大重试次数<input name="maxRetries" type="number" min="0" max="10" /></label>
+          <label>每条路由单次最多文章数<input name="maxArticlesPerRoute" type="number" min="1" max="100" /></label>
+          <div class="settings-actions"><button type="submit">保存采集设置</button><span id="settings-status"></span></div>
+        </form>
+      </section>
+    </main>
+    <dialog id="article-dialog">
+      <form method="dialog">
+        <button class="close" aria-label="关闭">×</button>
+        <p class="eyebrow">ARTICLE PREVIEW</p>
+        <h2 id="preview-title"></h2>
+        <p class="meta" id="preview-meta"></p>
+        <p id="preview-source"></p>
+        <p class="preview-hint">
+          下方是本次已成功加载的原网页静态快照；仅在确认后才会抓取正文。
+        </p>
+        <iframe
+          id="page-snapshot"
+          title="原网页静态快照"
+          sandbox="allow-popups"
+        ></iframe>
+        <div id="preview-content" class="article-preview-content"></div>
+        <div class="editor-actions">
+          <a id="open-source" target="_blank">打开原始地址</a
+          ><button value="cancel" class="secondary">返回选择</button
+          ><button id="confirm-fetch" value="default">确认抓取正文</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="editor">
+      <form method="dialog">
+        <button class="close" aria-label="关闭">×</button>
+        <p class="eyebrow">ARTICLE EDITOR</p>
+        <input id="edit-title" /><textarea id="edit-content"></textarea>
+        <div class="editor-actions">
+          <a id="export" target="_blank">下载排版 HTML</a
+          ><button value="cancel" class="secondary">取消</button
+          ><button id="save-article" value="default">保存修改</button>
+        </div>
+      </form>
+    </dialog>
+    <div id="toast"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
